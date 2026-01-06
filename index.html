@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Editor - Simple & Modern</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📸 Image Editor</h1>
+            <p class="subtitle">Rotate & Flip Image dengan Mudah</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="upload-box">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="upload-label">
+                    <span class="upload-icon">📁</span>
+                    <span class="upload-text">Pilih Gambar</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Workspace Section (Canvas + Sidebar) -->
+        <section class="workspace" id="workspaceSection" style="display: none;">
+            <!-- Canvas Area -->
+            <div class="canvas-area">
+                <div class="canvas-wrapper">
+                    <canvas id="mainCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Sidebar Toolbar -->
+            <aside class="sidebar-toolbar">
+                <div class="toolbar-header">
+                    <h3>🛠️ Toolbar</h3>
+                </div>
+
+                <div class="toolbar-content">
+                    <!-- Transform Button (Unified) -->
+                    <div class="control-group">
+                        <button class="btn btn-primary btn-dropdown" onclick="toggleDropdown('transformDropdown')">
+                            🔄 Transform
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content" id="transformDropdown">
+                            <!-- Rotate Section -->
+                            <div class="dropdown-section">
+                                <div class="section-label">Rotate</div>
+                                <button class="dropdown-item" onclick="rotate('mainCanvas')">
+                                    ↻ 90°
+                                </button>
+                                <button class="dropdown-item" onclick="rotate180('mainCanvas')">
+                                    ↻ 180°
+                                </button>
+                                <button class="dropdown-item" onclick="rotate270('mainCanvas')">
+                                    ↻ 270°
+                                </button>
+                            </div>
+
+                            <!-- Flip Section -->
+                            <div class="dropdown-section">
+                                <div class="section-label">Flip</div>
+                                <button class="dropdown-item" onclick="flipVertical('mainCanvas')">
+                                    ⇅ Vertikal
+                                </button>
+                                <button class="dropdown-item" onclick="flipHorizontal('mainCanvas')">
+                                    ⇆ Horizontal
+                                </button>
+                            </div>
+
+                            <!-- Rotate Bebas Section -->
+                            <div class="dropdown-section">
+                                <div class="section-label">Rotasi Bebas</div>
+                                <div class="slider-container">
+                                    <div class="slider-header">
+                                        <span class="slider-label">Sudut:</span>
+                                        <span class="slider-value" id="angleValue">0°</span>
+                                    </div>
+                                    <input type="range" id="customAngle" min="-180" max="180" value="0"
+                                        class="angle-slider" oninput="updateAngleDisplay(this.value)">
+                                    <div class="slider-marks">
+                                        <span>-180°</span>
+                                        <span>0°</span>
+                                        <span>180°</span>
+                                    </div>
+                                    <button class="btn btn-accent btn-apply" onclick="rotateCustom()">
+                                        Terapkan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Color Button (Unified) -->
+                    <div class="control-group">
+                        <button class="btn btn-secondary btn-dropdown" onclick="toggleDropdown('colorDropdown')">
+                            🎨 Color
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content" id="colorDropdown">
+                            <!-- RGB Section -->
+                            <div class="dropdown-section">
+                                <div class="section-label">RGB</div>
+                                <div class="slider-container">
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Red: <span id="rgbRValue">0</span></label>
+                                        <input type="range" id="rgbR" min="-255" max="255" value="0"
+                                            class="color-slider red-slider"
+                                            oninput="updateColorValue('rgbR', 'rgbRValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Green: <span id="rgbGValue">0</span></label>
+                                        <input type="range" id="rgbG" min="-255" max="255" value="0"
+                                            class="color-slider green-slider"
+                                            oninput="updateColorValue('rgbG', 'rgbGValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Blue: <span id="rgbBValue">0</span></label>
+                                        <input type="range" id="rgbB" min="-255" max="255" value="0"
+                                            class="color-slider blue-slider"
+                                            oninput="updateColorValue('rgbB', 'rgbBValue')">
+                                    </div>
+                                    <button class="btn btn-accent btn-apply" onclick="applyRGB()">
+                                        Terapkan RGB
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- HSV Section -->
+                            <div class="dropdown-section">
+                                <div class="section-label">HSV</div>
+                                <div class="slider-container">
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Hue: <span id="hsvHValue">0</span>°</label>
+                                        <input type="range" id="hsvH" min="-180" max="180" value="0"
+                                            class="color-slider hue-slider"
+                                            oninput="updateColorValue('hsvH', 'hsvHValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Saturation: <span id="hsvSValue">0</span>%</label>
+                                        <input type="range" id="hsvS" min="-100" max="100" value="0"
+                                            class="color-slider" oninput="updateColorValue('hsvS', 'hsvSValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Value: <span id="hsvVValue">0</span>%</label>
+                                        <input type="range" id="hsvV" min="-100" max="100" value="0"
+                                            class="color-slider" oninput="updateColorValue('hsvV', 'hsvVValue')">
+                                    </div>
+                                    <button class="btn btn-accent btn-apply" onclick="applyHSV()">
+                                        Terapkan HSV
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- CMYK Section -->
+                            <div class="dropdown-section">
+                                <div class="section-label">CMYK</div>
+                                <div class="slider-container">
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Cyan: <span id="cmykCValue">0</span>%</label>
+                                        <input type="range" id="cmykC" min="-100" max="100" value="0"
+                                            class="color-slider cyan-slider"
+                                            oninput="updateColorValue('cmykC', 'cmykCValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Magenta: <span id="cmykMValue">0</span>%</label>
+                                        <input type="range" id="cmykM" min="-100" max="100" value="0"
+                                            class="color-slider magenta-slider"
+                                            oninput="updateColorValue('cmykM', 'cmykMValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Yellow: <span id="cmykYValue">0</span>%</label>
+                                        <input type="range" id="cmykY" min="-100" max="100" value="0"
+                                            class="color-slider yellow-slider"
+                                            oninput="updateColorValue('cmykY', 'cmykYValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Black: <span id="cmykKValue">0</span>%</label>
+                                        <input type="range" id="cmykK" min="-100" max="100" value="0"
+                                            class="color-slider" oninput="updateColorValue('cmykK', 'cmykKValue')">
+                                    </div>
+                                    <button class="btn btn-accent btn-apply" onclick="applyCMYK()">
+                                        Terapkan CMYK
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- YIQ Section -->
+                            <div class="dropdown-section">
+                                <div class="section-label">YIQ</div>
+                                <div class="slider-container">
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Y: <span id="yiqYValue">0</span>%</label>
+                                        <input type="range" id="yiqY" min="-100" max="100" value="0"
+                                            class="color-slider" oninput="updateColorValue('yiqY', 'yiqYValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">I: <span id="yiqIValue">0</span>%</label>
+                                        <input type="range" id="yiqI" min="-100" max="100" value="0"
+                                            class="color-slider" oninput="updateColorValue('yiqI', 'yiqIValue')">
+                                    </div>
+                                    <div class="color-slider-group">
+                                        <label class="color-label">Q: <span id="yiqQValue">0</span>%</label>
+                                        <input type="range" id="yiqQ" min="-100" max="100" value="0"
+                                            class="color-slider" oninput="updateColorValue('yiqQ', 'yiqQValue')">
+                                    </div>
+                                    <button class="btn btn-accent btn-apply" onclick="applyYIQ()">
+                                        Terapkan YIQ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fixed Action Buttons -->
+                <div class="toolbar-footer">
+                    <button class="btn btn-success btn-action" onclick="saveImage()">
+                        💾 Simpan
+                    </button>
+                    <button class="btn btn-warning btn-action" onclick="resetImage()">
+                        🔄 Reset
+                    </button>
+                </div>
+            </aside>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/imageProcessor.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,741 @@
+/* ========================================
+   RESET & BASE STYLES
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+/* ========================================
+   CONTAINER
+   ======================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* ========================================
+   UPLOAD SECTION
+   ======================================== */
+.upload-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.upload-box {
+    width: 100%;
+    max-width: 400px;
+}
+
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    background: white;
+    border-radius: 16px;
+    border: 3px dashed #667eea;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-label:hover {
+    border-color: #764ba2;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.upload-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.upload-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #667eea;
+}
+
+/* ========================================
+   WORKSPACE LAYOUT (Canvas + Sidebar)
+   ======================================== */
+.workspace {
+    display: flex;
+    gap: 20px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    min-height: 500px;
+}
+
+/* Canvas Area - Left Side */
+.canvas-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainCanvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Toolbar - Right Side */
+.sidebar-toolbar {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    height: fit-content;
+    max-height: calc(100vh - 200px);
+}
+
+.toolbar-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.toolbar-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.toolbar-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 380px);
+}
+
+/* Custom Scrollbar untuk Toolbar */
+.toolbar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.toolbar-content::-webkit-scrollbar-track {
+    background: #e9ecef;
+    border-radius: 10px;
+}
+
+.toolbar-content::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+}
+
+.toolbar-content::-webkit-scrollbar-thumb:hover {
+    background: #5568d3;
+}
+
+/* ========================================
+   TOOLBAR FOOTER (Fixed Action Buttons)
+   ======================================== */
+.toolbar-footer {
+    padding: 15px 20px;
+    background: white;
+    border-top: 2px solid #e9ecef;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-action {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* ========================================
+   CONTROL PANEL (Sidebar)
+   ======================================== */
+.control-panel {
+    display: grid;
+    gap: 15px;
+}
+
+.control-group {
+    position: relative;
+}
+
+.control-title {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* ========================================
+   DROPDOWN BUTTON & CONTENT
+   ======================================== */
+.btn-dropdown {
+    width: 100%;
+    justify-content: space-between;
+    position: relative;
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content.show {
+    display: flex;
+}
+
+/* Dropdown Section (untuk nested items) */
+.dropdown-section {
+    padding: 12px 0;
+}
+
+.dropdown-section:not(:last-child) {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.section-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #667eea;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    padding: 0 8px;
+}
+
+.dropdown-item {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: #f8f9fa;
+    color: #333;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.dropdown-item:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-item:hover {
+    background: #e9ecef;
+    transform: translateX(4px);
+}
+
+.dropdown-item:active {
+    transform: translateX(2px);
+}
+
+/* ========================================
+   SLIDER CONTAINER (Inside Dropdown)
+   ======================================== */
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slider-label {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.slider-value {
+    font-size: 1rem;
+    color: #667eea;
+    font-weight: 700;
+    padding: 4px 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.angle-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Slider Track */
+.angle-slider::-webkit-slider-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    border-radius: 5px;
+}
+
+.angle-slider::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    border-radius: 5px;
+}
+
+/* Slider Thumb */
+.angle-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #667eea;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.angle-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #667eea;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.angle-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    border-color: #764ba2;
+}
+
+.angle-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    border-color: #764ba2;
+}
+
+/* Slider Marks */
+.slider-marks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: -4px;
+}
+
+.btn-apply {
+    width: 100%;
+    margin-top: 4px;
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   COLOR SLIDERS
+   ======================================== */
+.color-slider-group {
+    margin-bottom: 12px;
+}
+
+.color-slider-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.color-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.color-label span {
+    color: #667eea;
+    font-weight: 700;
+}
+
+.color-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Color Slider Variants */
+.red-slider::-webkit-slider-track {
+    background: linear-gradient(to right, #000 0%, #ff0000 100%);
+}
+
+.red-slider::-moz-range-track {
+    background: linear-gradient(to right, #000 0%, #ff0000 100%);
+}
+
+.green-slider::-webkit-slider-track {
+    background: linear-gradient(to right, #000 0%, #00ff00 100%);
+}
+
+.green-slider::-moz-range-track {
+    background: linear-gradient(to right, #000 0%, #00ff00 100%);
+}
+
+.blue-slider::-webkit-slider-track {
+    background: linear-gradient(to right, #000 0%, #0000ff 100%);
+}
+
+.blue-slider::-moz-range-track {
+    background: linear-gradient(to right, #000 0%, #0000ff 100%);
+}
+
+.cyan-slider::-webkit-slider-track {
+    background: linear-gradient(to right, #fff 0%, #00ffff 100%);
+}
+
+.cyan-slider::-moz-range-track {
+    background: linear-gradient(to right, #fff 0%, #00ffff 100%);
+}
+
+.magenta-slider::-webkit-slider-track {
+    background: linear-gradient(to right, #fff 0%, #ff00ff 100%);
+}
+
+.magenta-slider::-moz-range-track {
+    background: linear-gradient(to right, #fff 0%, #ff00ff 100%);
+}
+
+.yellow-slider::-webkit-slider-track {
+    background: linear-gradient(to right, #fff 0%, #ffff00 100%);
+}
+
+.yellow-slider::-moz-range-track {
+    background: linear-gradient(to right, #fff 0%, #ffff00 100%);
+}
+
+.hue-slider::-webkit-slider-track {
+    background: linear-gradient(to right,
+            #ff0000 0%, #ffff00 17%, #00ff00 33%,
+            #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+}
+
+.hue-slider::-moz-range-track {
+    background: linear-gradient(to right,
+            #ff0000 0%, #ffff00 17%, #00ff00 33%,
+            #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+}
+
+/* Default color slider track (for non-colored ones) */
+.color-slider::-webkit-slider-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    border-radius: 5px;
+}
+
+.color-slider::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    border-radius: 5px;
+}
+
+/* Color Slider Thumb */
+.color-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #333;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.color-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #333;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.color-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.color-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Button Variants */
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+}
+
+.btn-secondary {
+    background: #764ba2;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #623d8a;
+}
+
+.btn-accent {
+    background: #f093fb;
+    color: white;
+}
+
+.btn-accent:hover {
+    background: #e77fef;
+}
+
+.btn-success {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #45a049;
+}
+
+.btn-warning {
+    background: #ff9800;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #e68900;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 1024px) {
+    .sidebar-toolbar {
+        width: 280px;
+        max-height: calc(100vh - 220px);
+    }
+
+    .toolbar-content {
+        max-height: calc(100vh - 400px);
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    /* Stack layout untuk mobile */
+    .workspace {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .canvas-area {
+        min-height: 300px;
+    }
+
+    /* Sidebar jadi full width di mobile */
+    .sidebar-toolbar {
+        width: 100%;
+        max-height: 500px;
+    }
+
+    .toolbar-content {
+        max-height: 350px;
+    }
+
+    .toolbar-footer {
+        padding: 12px 15px;
+    }
+
+    .btn {
+        font-size: 0.95rem;
+        padding: 10px 20px;
+    }
+
+    .btn-action {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+    }
+
+    .dropdown-item {
+        font-size: 0.9rem;
+        padding: 9px 12px;
+    }
+
+    .slider-value {
+        font-size: 0.95rem;
+        min-width: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .upload-label {
+        padding: 40px 20px;
+    }
+
+    .workspace {
+        padding: 12px;
+    }
+
+    .toolbar-header {
+        padding: 15px;
+    }
+
+    .toolbar-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .toolbar-content {
+        padding: 15px;
+        max-height: 300px;
+    }
+
+    .toolbar-footer {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .btn-action {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .canvas-area {
+        min-height: 250px;
+        padding: 15px;
+    }
+}
